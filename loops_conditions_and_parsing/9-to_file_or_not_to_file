@@ -4,7 +4,7 @@ FILE=$( find . -name "school" |cut -d "/" -f2)
      if [ -e "$FILE" ] ;then
           echo "school file exists"
      if [ -s "$FILE" ] ;then
-          echo "school file not empty"
+          echo "school file is not empty"
      elif [ ! -s "$FILE" ] ;then
           echo "school file is empty"
      fi
