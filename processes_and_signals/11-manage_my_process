@@ -2,7 +2,7 @@
 #script that starts stops and restarts when comanded
 function start(){
       bash ./manage_my_process &
-	echo "$$" > /var/run/my_process.pid
+	echo "$!" > /var/run/my_process.pid
    }
 
 function stop(){
@@ -12,19 +12,19 @@ function stop(){
 function restart(){
       stop
       start
-        echo "manage_my_process"
+        echo "manage_my_process restarted"
 }
 
 if [ $# -eq 1 ] 
 then
-	OPTION="$1"
-	case $OPTION in
+	OPTIONN="$1"
+	case $OPTIONN in
 	"start")
 		start
 	echo "manage_my_process started"
 	;;
         "stop")
-		stop
+		#stop
 		[ -e "/var/run/my_process.pid" ] && pkill -f './manage_my_process' && rm /var/run/my_process.pid
 	      	echo "manage_my_process stopped"
 	;;
