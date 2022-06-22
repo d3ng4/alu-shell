@@ -17,8 +17,8 @@ function restart(){
 
 if [ $# -eq 1 ] 
 then
-	OPTIONN="$1"
-	case $OPTIONN in
+	OPTION="$1"
+	case $OPTION in
 	"start")
 		start
 	echo "manage_my_process started"
