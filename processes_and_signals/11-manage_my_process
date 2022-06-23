@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 #script that starts stops and restarts when comanded
-function start(){
+function startup(){
       bash ./manage_my_process &
 	echo "$!" > /var/run/my_process.pid
    }
 
-function stop(){
+function stopnow(){
       [ -e "/var/run/my_process.pid" ] && pkill -f './manage_my_process' && rm /var/run/my_process.pid 
 }
 
 function restart(){
-      stop
-      start
+      stopnow
+      startup
         echo "manage_my_process restarted"
 }
 
