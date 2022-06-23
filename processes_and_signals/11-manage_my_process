@@ -1,34 +1,39 @@
 #!/usr/bin/env bash
 #script
+function startup(){
+	bash ./manage_my_process &
+	echo "$!" > /var/run/my_process.pid
+}
 
-startup(){
-   ./manage_my_process &
-   echo "$!" > /var/run/my_process.pid
-  }
+function stopnow(){
+	[ -e "/var/run/my_process.pid" ] && pkill -f './manage_my_process' && rm /var/run/my_process.pid 
+}
 
-stopremove(){
-   pkill -f ./manage_my_process
-   rm /var/run/my_process.pid
-  }
-
-OPTION="$1"
-if [ $# -eq 1 ]
+function restartnow(){
+	stopnow
+	startup
+	echo "manage_my_process restarted"
+}
+if [ $# -eq 1 ] 
 then
-   case $OPTION in
-   "start")
-       startup
-       echo "manage_my_process started"
-  ;;
-    "stop")
-       stopremove
-       echo "manage_my_process stopped"
-  ;;
-    "restart")
-       stopremove
-       startup
-       echo "manage_my_process restarted"
-  ;;
-*)
-      echo "Usage: manage_my_process {start|stop|restart}
-  ;;
-esac
+	OPTIONN="$1"
+	case $OPTIONN in
+	"start")
+		startup
+	echo "manage_my_process started"
+	;;
+	"stop")
+		#stopnow
+		[ -e "/var/run/my_process.pid" ] && pkill -f './manage_my_process' && rm /var/run/my_process.pid
+	      	echo "manage_my_process stopped"
+	;;
+        "restart")
+	restartnow
+	;;
+	*)
+	echo "Usage: manage_my_process {start|stop|restart}"
+	;;
+       esac
+else 
+	echo "Usage: manage_my_process {start|stop|restart}"
+fi
