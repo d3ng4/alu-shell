@@ -5,12 +5,13 @@ function startup(){
 	echo "$!" > /var/run/my_process.pid
 }
 
-function stopnow(){
-	[ -e "/var/run/my_process.pid" ] && pkill -f './manage_my_process' && rm /var/run/my_process.pid 
+function stopremove(){
+	 pkill -f './manage_my_process' 
+	 rm /var/run/my_process.pid 
 }
 
 function restartnow(){
-	stopnow
+	stopremove
 	startup
 	echo "manage_my_process restarted"
 }
@@ -24,7 +25,6 @@ then
 	;;
 	"stop")
 		#stopremove
-		[ -e "/var/run/my_process.pid" ] && pkill -f './manage_my_process' && rm /var/run/my_process.pid
 	      	echo "manage_my_process stopped"
 	;;
         "restart")
